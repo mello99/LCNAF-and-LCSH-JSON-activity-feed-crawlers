@@ -61,15 +61,13 @@ def fetch_json(url: str, delay: float = 0.0) -> dict | None:
         return None, None
 
 
-def safe_filename(url: str) -> str:
-    """Convert a feed URL to a safe local filename, preserving the page number."""
-    # e.g. http://id.loc.gov/authorities/names/activitystreams/feed/97  -> feed_97.json
+def safe_filename(url: str, today_str: str) -> str:
+    """Convert a feed URL to a filename with the LCNAF prefix, feed number, and date."""
+    # e.g. http://id.loc.gov/authorities/names/activitystreams/feed/97
+    #   -> LCNAF_Activity_Stream_97_2026-06-09.json
     m = re.search(r"/feed/(\d+)$", url)
-    if m:
-        return f"feed_{m.group(1)}.json"
-    name = re.sub(r"^https?://", "", url)
-    name = re.sub(r"[^\w.\-]", "_", name)
-    return name[:200] + ".json"
+    feed_num = m.group(1) if m else re.sub(r"[^\w]", "_", url)[-20:]
+    return f"LCNAF_Activity_Stream_{feed_num}_{today_str}.json"
 
 
 def crawl(
@@ -108,7 +106,7 @@ def crawl(
         has_today = today_str in dates_on_page
 
         if has_today:
-            filename = safe_filename(current_url)
+            filename = safe_filename(current_url, today_str)
             dest = os.path.join(output_dir, filename)
             if dry_run:
                 print(f"  [DRY RUN] Would save: {dest}")

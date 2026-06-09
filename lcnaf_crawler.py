@@ -121,7 +121,9 @@ def crawl(
         else:
             other_dates = sorted(d for d in dates_on_page if d)
             print(f"  [SKIP] No items published today. Dates on page: {other_dates}")
+            print("  Stopping — no further pages will contain today's items.")
             pages_no_match += 1
+            break
 
         current_url = next_url
 

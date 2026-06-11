@@ -1,2 +1,2 @@
 # LCNAF-and-LCSH-JSON-activity-feed-crawlers
-Crawls paginated JSON-LD activity stream feeds for the Library of Congress's LC Name authority file - LCNAF (lcnaf_crawler.py) and Library of Congress Subject Headings - LCSH (lcsh.crawler.py). Downloads the activity feed URLs and corresponding JSON files that contain items whose "published" date is within the last N day.
+Crawls the Library of Congress's LCNAF (Library of Congress Name Authority File) and LCSH (Library of Congress Subject Headings) paginated daily activity feeds, stored as JSON-LD files. There is a separate crawler for LCNAF (lcnaf_crawler.py) and LCSH (lcsh.crawler.py). These crawlers the activity feed URLs and corresponding JSON files that contain items whose "published" date is on the day of the crawl.
